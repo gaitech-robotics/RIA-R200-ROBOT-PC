@@ -1,0 +1,26 @@
+topics:
+- name    : joystick
+  topic   : /r200/teleop/cmd_vel_smooth
+  timeout : 0.5
+  priority: 100
+
+- name    : navigation
+  topic   : /r200/move_base/cmd_vel
+  timeout : 0.5
+  priority: 50
+
+- name    : external
+  topic   : /ext/cmd_vel_smooth
+  timeout : 0.5
+  priority: 10
+
+- name    : fs
+  topic   : /FAILSAFE
+  timeout : 0.5
+  priority: 1
+
+locks:
+- name    : runstop
+  topic   : riaodo_runstop
+  timeout : 0.0    
+  priority: 255

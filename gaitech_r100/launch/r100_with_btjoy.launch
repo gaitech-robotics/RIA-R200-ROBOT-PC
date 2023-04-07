@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+	<!--Arguments to Pass to Launch File-->
+	<arg name="robot_name" default="r100" />
+	<!-- Launch Bluetooth Nodes -->
+	<include file="$(find gaitech_r100)/launch/btjoystick.launch">
+		<arg name="robot_name" value="$(arg robot_name)" />
+	</include>
+</launch>

@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<robot name="RIA_R200" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find r200_description)/urdf/materials.urdf.xacro"/>
+  <xacro:include filename="$(find r200_description)/urdf/property.urdf.xacro"/>
+  <xacro:include filename="$(find r200_description)/urdf/wheels_static.urdf.xacro"/>
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.03 0.03 0.03"/>
+      </geometry>
+      <material name="Green"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.03 0.03 0.03"/>
+      </geometry>
+      <material name="Green"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>   
+  </link>
+
+  <link name="r200_body" >
+    <inertial>
+      <mass value="25.6147"/>
+      <origin rpy=" 0 0 0" xyz="0 0 0"/>
+      <inertia  ixx="0.9696" ixy="0.04536" ixz="-0.08869" iyy="2.4260" iyz="-0.016176" izz="2.997835"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://r200_description/meshes/body.stl"/>
+      </geometry>
+      <material name="Dark_Grey"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://r200_description/meshes/body.stl"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>      
+  </link>
+
+  <joint name="r200_body_to_base_link" type="fixed">
+    <parent link="base_link"/>
+    <child link="r200_body"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+
+
+  <link name="r200_top_plate" >
+    <inertial>
+      <mass value="6.2916"/>
+      <origin rpy=" 0 0 0" xyz="0 0 0"/>
+      <inertia  ixx="0.18868" ixy="0.002677" ixz="-0.000059" iyy="0.20875" iyz="0.000018" izz="0.397193"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://r200_description/meshes/top_plate.stl"/>
+      </geometry>
+      <material name="Black"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://r200_description/meshes/top_plate.stl"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>      
+  </link>
+
+  <joint name="base_link_to_top_plate" type="fixed">
+    <parent link="base_link"/>
+    <child link="r200_top_plate"/>
+    <origin rpy="0 0 0" xyz="0 0 0.266"/>
+  </joint>
+
+
+  <!-- drive wheels-->
+  <xacro:r200_wheel prefix="front_left" parent="base_link" >
+	<origin xyz="${WHEEL_X} ${WHEEL_Y} ${WHEEL_Z}" rpy="0 0 0"/>
+  </xacro:r200_wheel>
+  <xacro:r200_wheel prefix="rear_left" parent="base_link" >
+	<origin xyz="-${WHEEL_X} ${WHEEL_Y} ${WHEEL_Z}" rpy="0 0 0"/>
+  </xacro:r200_wheel>
+  <xacro:r200_wheel prefix="front_right" parent="base_link" >
+	<origin xyz="${WHEEL_X} -${WHEEL_Y} ${WHEEL_Z}" rpy="0 0 0"/>
+  </xacro:r200_wheel>
+  <xacro:r200_wheel prefix="rear_right" parent="base_link" >
+	<origin xyz="-${WHEEL_X} -${WHEEL_Y} ${WHEEL_Z}" rpy="0 0 0"/>
+  </xacro:r200_wheel>
+
+
+
+
+</robot>

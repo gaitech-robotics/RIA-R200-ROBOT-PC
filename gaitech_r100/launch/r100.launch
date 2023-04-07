@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+	<!--Arguments to Pass to Launch File-->
+	<arg name="robot_name" 			default="r100" />
+	<arg name="robot_device"		default="/dev/ttyACM0" />
+	<arg name="robot_configuration"	default="/home/usama/workspace/mobile_robotics/codebase/linuxws/janus-rc-cpp/build/test_e100/testdiff.config" /> <!-- For Testing -->
+	<!-- Robot R100 Node -->
+	<node name="robot_node" pkg="gaitech_r100" type="gaitech_r100_node" output="screen" ns="$(arg robot_name)">
+		<remap from="cmd_vel" to="/$(arg robot_name)/cmd_vel" />
+		<remap from="odom" to="/$(arg robot_name)/odom" />
+		<!-- services remap -->
+		<remap from="start" to="/$(arg robot_name)/start" />
+		<remap from="stop" to="/$(arg robot_name)/stop" />
+		<remap from="reboot" to="/$(arg robot_name)/reboot" />
+		<remap from="odometry_reset" to="/$(arg robot_name)/odometry_reset" />
+		<!-- other parameters -->
+		<param name="robot_device"			value="$(arg robot_device)" 			type="str" />
+		<param name="robot_configuration" 	value="$(arg robot_configuration)" 		type="str" />
+		<param name="run_on_startup"		value="True"							type="bool" />
+		<param name="baseframe"				value="$(arg robot_name)/base_link"		type="str" />
+		<param name="worldframe"			value="/world"							type="str" />
+		<param name="use_external_controller" value="False"							type="bool" />
+	</node>
+</launch>

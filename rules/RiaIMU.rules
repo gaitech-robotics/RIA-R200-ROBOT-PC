@@ -1,0 +1,4 @@
+# set the udev rule , make the device_port be fixed by RIA-ODO IMU
+#
+KERNEL=="ttyACM*", ATTRS{idVendor}=="1209", ATTRS{idProduct}=="5741", MODE:="0777", SYMLINK+="RiaIMU"
+

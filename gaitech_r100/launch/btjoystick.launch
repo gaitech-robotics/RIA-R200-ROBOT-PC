@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<launch>
+	<!--Arguments to Pass to Launch File-->
+	<arg name="robot_name" default="r100" />
+	<arg name="joystick_device" default="/dev/input/js0" />
+	<arg name="joystick_repeat"	default="0.0" />
+	<arg name="joystick_deadzone" default="0.05" />
+	<!--Bluetooth Joystick Node-->
+	<node name="bluetooth_joystick" pkg="joy" type="joy_node" output="screen" ns="$(arg robot_name)">
+		<param name="dev" value="$(arg joystick_device)" type="str" />
+		<param name="autorepeat_rate" value="$(arg joystick_repeat)" type="double" />
+		<param name="deadzone" value="$(arg joystick_deadzone)" type="double" />
+	</node>
+	<!-- R100 Bluetooth Joystick Teleop Node -->
+	<node name="teleop_joystick" pkg="gaitech_r100" type="gaitech_r100_btjoystick_node" output="screen" ns="$(arg robot_name)">
+		<remap from="joy" to="/$(arg robot_name)/joy" />
+		<remap from="cmd_vel" to="/$(arg robot_name)/cmd_vel" />
+		<remap from="action_start" 			to="/$(arg robot_name)/start" />
+		<remap from="action_stop" 			to="/$(arg robot_name)/stop" />
+		<remap from="action_restart"		to="/$(arg robot_name)/reboot" />
+		<remap from="action1" 				to="/$(arg robot_name)/action1" />
+		<remap from="action2" 				to="/$(arg robot_name)/action2" />
+		<remap from="action3" 				to="/$(arg robot_name)/action3" />
+		<remap from="action4" 				to="/$(arg robot_name)/odometry_reset" />	<!-- Development : Using for zeroing odometry -->
+		<!-- Parameters -->
+		<param name="pub_freq"				value="10.0"			type="double" />
+		<param name="fwd_vel_max"			value="5.0"				type="double" />
+		<param name="fwd_vel_min"			value="0.0"			type="double" />
+		<param name="rot_vel_max"			value="20.0"			type="double" />
+		<param name="rot_vel_min"			value="0.0"				type="double" />
+		<param name="button_repeat_wait"	value="0.8"				type="double" /> <!-- To prevent repeated triggering of same action -->
+		<param name="speed_levels"			value="5"				type="int"	/>
+		<param name="pub_cmdvel_onstartup"	value="True"			type="bool" />
+		<!-- Button Axis Use Map -->
+		<param name="Action_StartRobot"		value="Button_Start"	type="str" />
+		<param name="Action_EmergencyStop" 	value="Button_Back" 	type="str" />
+		<param name="Action_Restart"		value="Button_Logo"		type="str" />
+		<param name="Action_SpeedLvlInc"	value="Button_RB"		type="str" />
+		<param name="Action_SpeedLvlDec"	value="Button_LB"		type="str" />
+		<param name="Action_1"				value="Button_A"		type="str" />
+		<param name="Action_2"				value="Button_B"		type="str" />
+		<param name="Action_3"				value="Button_X"		type="str" />
+		<param name="Action_4"				value="Button_Y"		type="str" />
+		<param name="Action_Forward"		value="Axis_RAnalog_Vertical"	type="str" />
+		<param name="Action_Rotate"			value="Axis_LAnalog_Horizontal"	type="str" />
+		<param name="Action_Pan"			value="Axis_DPad_Horizontal"	type="str" />
+		<param name="Action_Tilt"			value="Axis_DPad_Vertical"		type="str" />
+		<param name="Action_Slider1"		value="Axis_LT"					type="str" />
+		<param name="Action_Slider2"		value="Axis_RT"					type="str" />
+		<!-- Button Map -->
+		<param name="Button_A" value="0" type="int" />
+		<param name="Button_B" value="1" type="int" />
+		<param name="Button_X" value="2" type="int" />
+		<param name="Button_Y" value="3" type="int" />
+		<param name="Button_LB" value="4" type="int" />
+		<param name="Button_RB" value="5" type="int" />
+		<param name="Button_Back" value="6" type="int" />
+		<param name="Button_Start" value="7" type="int" />
+		<param name="Button_Logo" value="8" type="int" />
+		<param name="Button_LAnalog" value="9" type="int" />
+		<param name="Button_RAnalog" value="10" type="int" />
+		<!-- Axis Map -->
+		<param name="Axis_LAnalog_Horizontal" value="0" type="int" />
+		<param name="Axis_LAnalog_Vertical" value="1" type="int" />
+		<param name="Axis_RAnalog_Horizontal" value="3" type="int" />
+		<param name="Axis_RAnalog_Vertical" value="4" type="int" />
+		<param name="Axis_DPad_Horizontal" value="6" type="int" />
+		<param name="Axis_DPad_Vertical" value="7" type="int" />
+		<param name="Axis_LT" value="2" type="int" />
+		<param name="Axis_RT" value="5" type="int" />
+	</node>
+</launch>

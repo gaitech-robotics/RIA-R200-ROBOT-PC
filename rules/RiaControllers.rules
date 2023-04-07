@@ -1,0 +1,5 @@
+# set the rule , give the permission to the RIA-ODO controllers
+#
+KERNEL=="ttyS1", MODE:="0777", SYMLINK+="LeftMotor"
+KERNEL=="ttyS0", MODE:="0777", SYMLINK+="RightMotor"
+

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<launch>
+	<!--Arguments to Pass to Launch File-->
+	<arg name="robot_name" 			default="r200" />
+	<arg name="robot_motor_left"	default="/dev/LeftMotor" />
+	<arg name="robot_motor_right"	default="/dev/RightMotor" />
+	<arg name="robot_left_ccw"		default="True" />
+	<arg name="robot_right_ccw"		default="False" />
+	<arg name="robot_configuration"	default="/home/ria/catkin_ws/src/gaitech_r100/params/r100_kinco.config" /> <!-- For Testing -->
+	<!-- Robot RIA ODO Node -->
+	<node name="robot_node" pkg="gaitech_r100" type="gaitech_r100_node" output="screen" ns="$(arg robot_name)">
+		<remap from="cmd_vel" to="/$(arg robot_name)/cmd_vel" />
+		<remap from="odom" to="/$(arg robot_name)/odom" />
+		<!-- services remap -->
+		<remap from="start" to="/$(arg robot_name)/start" />
+		<remap from="stop" to="/$(arg robot_name)/stop" />
+		<remap from="reboot" to="/$(arg robot_name)/reboot" />
+		<remap from="odometry_reset" to="/$(arg robot_name)/odometry_reset" />
+		<!-- other parameters -->
+		<param name="robot_configuration" 	value="$(arg robot_configuration)" 		type="str" />
+		<param name="run_on_startup"		value="True"							type="bool" />
+		<param name="baseframe"				value="base_link"		type="str" />
+		<param name="worldframe"			value="odom"							type="str" />
+		<!-- To select external controllers -->
+		<param name="use_external_controller" value="True"							type="bool" />
+		<param name="ext_test_run"			value="True"							type="bool" />
+		<param name="direction_left_ccw" 	value="$(arg robot_left_ccw)"			type="bool" />
+		<param name="direction_right_ccw"	value="$(arg robot_right_ccw)"			type="bool" />
+		<param name="robot_device_left"		value="$(arg robot_motor_left)" 		type="str" />
+		<param name="robot_device_right"	value="$(arg robot_motor_right)" 		type="str" />
+	</node>
+	
+	<node name="FAILSAFE" pkg="gaitech_r100" type="failsafe"/>
+</launch>

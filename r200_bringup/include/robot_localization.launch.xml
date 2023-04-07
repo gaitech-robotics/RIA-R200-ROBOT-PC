@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- ROBOT_LOCALIZATION -->
+    <arg name="odom_frame" default="odom_loc"/> 
+    <arg name="base_frame" default="base_link"/>
+    <arg name="odom_topic" default="/r200/odom"/>
+    <arg name="imu_topic" default="/r200/imu"/> <!-- /mavros/imu/data -->
+
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_loc_odom" clear_params="true" output="screen">      
+      <remap from="odometry/filtered" to="/r200/odom_ekf" />
+      <param name="frequency" value="30"/>
+      <param name="sensor_timeout" value="0.1"/>
+      <param name="two_d_mode" type="bool" value="true"/>
+      <param name="odom_frame" value="$(arg odom_frame)"/>
+      <param name="base_link_frame" value="$(arg base_frame)"/>
+      <param name="odom0" value="$(arg odom_topic)"/> 
+      <param name="imu0" value="$(arg imu_topic)"/>    
+
+      <rosparam param="odom0_config">[false, false, false,
+                                      false, false, false,
+                                      true, false, false,
+                                      false, false, false,
+                                      false, false, false]</rosparam>
+
+      <rosparam param="imu0_config">[false, false, false,
+                                     false, false, false, 
+                                     false, false, false,
+                                     false, false, true,
+                                     true, false, false]</rosparam>
+
+      <param name="odom0_differential" value="true"/>
+      <param name="imu0_differential" value="false" />
+      <param name="odom0_relative" value="false"/>
+      <param name="imu0_relative" value="false"/>
+      <param name="imu0_remove_gravitational_acceleration" type="bool" value="true"/>
+      <param name="print_diagnostics" value="false"/>
+      <param name="imu0_linear_acceleration_rejection_threshold" value="0.1"/>
+    </node>
+
+</launch>

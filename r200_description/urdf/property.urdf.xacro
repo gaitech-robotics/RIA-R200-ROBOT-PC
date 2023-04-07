@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<robot name="RIA_R200_Properties" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+
+  <xacro:property name="M_PI" value="3.1415926535897931"/>
+   
+  <!--wheel-->
+  <xacro:property name="WHEEL_X" value="0.230"/>
+  <xacro:property name="WHEEL_Y" value="0.269"/>
+  <xacro:property name="WHEEL_Z" value="0.066"/> 
+
+
+ </robot>
